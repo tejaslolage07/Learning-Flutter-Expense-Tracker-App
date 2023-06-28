@@ -27,13 +27,28 @@ class _ExpensesState extends State<Expenses> {
     ),
   ];
 
+  void _openAddExpensesOverlay() {
+    showModalBottomSheet(
+      context:
+          context, // This context property is automatically added by Flutter
+      // when using _ExpensesState. It has context of the ExpensesState widget class.
+      // It has widget meta data of Flutter. This context is for the whole class.
+      builder: (ctx) =>
+          const Text('Modal bottom sheet'), // Here, the context is about
+      // showModalBottomSheet (ctx for different name than context)
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Expense Tracker'),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+          IconButton(
+            onPressed: _openAddExpensesOverlay,
+            icon: Icon(Icons.add),
+          ),
         ],
       ),
       body: Column(
