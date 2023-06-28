@@ -1,4 +1,5 @@
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
+import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/models/expense.dart';
 
@@ -34,7 +35,7 @@ class _ExpensesState extends State<Expenses> {
       // when using _ExpensesState. It has context of the ExpensesState widget class.
       // It has widget meta data of Flutter. This context is for the whole class.
       builder: (ctx) =>
-          const Text('Modal bottom sheet'), // Here, the context is about
+          const NewExpense(), // Here, the context is about
       // showModalBottomSheet (ctx for different name than context)
     );
   }
