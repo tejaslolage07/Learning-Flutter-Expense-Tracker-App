@@ -11,17 +11,35 @@ class NewExpense extends StatefulWidget {
 }
 
 class _NewExpenseState extends State<NewExpense> {
+  final _titleController =
+      TextEditingController(); // This controller is optimized by Flutter to
+  // handle user text input. We have to dispose it when we are done or else it
+  // lives on in memory and causes overflows.
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(16),
+    return Padding(
+      padding: const EdgeInsets.all(16),
       child: Column(children: [
         TextField(
+          controller: _titleController,
           maxLength: 50,
           keyboardType: TextInputType.text,
-          decoration: InputDecoration(labelText: 'Title'),
-          // onSubmitted: (value) => print(value),
+          decoration: const InputDecoration(labelText: 'Title'),
         ),
+        Row(
+          children: [
+            ElevatedButton(onPressed: () {
+              
+            }, child: const Text('Save Expense'))
+          ],
+        )
       ]),
     );
   }
