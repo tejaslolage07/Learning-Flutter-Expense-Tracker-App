@@ -15,10 +15,12 @@ class _NewExpenseState extends State<NewExpense> {
       TextEditingController(); // This controller is optimized by Flutter to
   // handle user text input. We have to dispose it when we are done or else it
   // lives on in memory and causes overflows.
+  final _amountController = TextEditingController();
 
   @override
   void dispose() {
     _titleController.dispose();
+    _amountController.dispose();
     super.dispose();
   }
 
@@ -33,11 +35,24 @@ class _NewExpenseState extends State<NewExpense> {
           keyboardType: TextInputType.text,
           decoration: const InputDecoration(labelText: 'Title'),
         ),
+        TextField(
+          controller: _amountController,
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+            prefixText: '\$ ',
+            labelText: 'Amount',
+          ),
+        ),
         Row(
           children: [
-            ElevatedButton(onPressed: () {
-              
-            }, child: const Text('Save Expense'))
+            TextButton(
+              onPressed: () {},
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Save Expense'),
+            )
           ],
         )
       ]),
