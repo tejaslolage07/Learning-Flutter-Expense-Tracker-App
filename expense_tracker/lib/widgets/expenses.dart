@@ -34,8 +34,7 @@ class _ExpensesState extends State<Expenses> {
           context, // This context property is automatically added by Flutter
       // when using _ExpensesState. It has context of the ExpensesState widget class.
       // It has widget meta data of Flutter. This context is for the whole class.
-      builder: (ctx) =>
-          const NewExpense(), // Here, the context is about
+      builder: (ctx) => const NewExpense(), // Here, the context is about
       // showModalBottomSheet (ctx for different name than context)
     );
   }
@@ -48,7 +47,7 @@ class _ExpensesState extends State<Expenses> {
         actions: [
           IconButton(
             onPressed: _openAddExpensesOverlay,
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           ),
         ],
       ),

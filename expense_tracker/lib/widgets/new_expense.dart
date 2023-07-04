@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:expense_tracker/models/expense.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class _NewExpenseState extends State<NewExpense> {
   // handle user text input. We have to dispose it when we are done or else it
   // lives on in memory and causes overflows.
   final _amountController = TextEditingController();
+  DateTime? _selectedDate;
+  Category _selectedCategory = Category.leisure;
 
   @override
   void dispose() {
@@ -24,14 +27,18 @@ class _NewExpenseState extends State<NewExpense> {
     super.dispose();
   }
 
-  void _presentDatePicker() {
+  void _presentDatePicker() async {
     final now = DateTime.now();
-    showDatePicker(
+    final pickedDate = await showDatePicker(
+      // showDatePicker returns a Future object (like a promise in JS)
       context: context,
       initialDate: now,
       firstDate: now.subtract(const Duration(days: 365)),
       lastDate: now,
-    );
+    ).then((value) => null);
+    setState(() {
+      _selectedDate = pickedDate;
+    });
   }
 
   @override
@@ -65,7 +72,11 @@ class _NewExpenseState extends State<NewExpense> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text('Selected Date'),
+                  Text(
+                    _selectedDate == null
+                        ? 'No date selected'
+                        : formatter.format(_selectedDate!),
+                  ),
                   IconButton(
                     onPressed: _presentDatePicker,
                     icon: const Icon(Icons.calendar_month),
@@ -75,8 +86,27 @@ class _NewExpenseState extends State<NewExpense> {
             )
           ],
         ),
+        const SizedBox(
+          height: 16,
+        ),
         Row(
           children: [
+            DropdownButton<Category>(
+              value: _selectedCategory,
+              items: Category.values.map((category) {
+                return DropdownMenuItem<Category>(
+                  value: category,
+                  child: Text(category.name.toUpperCase()),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  if (value == null) return;
+                  _selectedCategory = value;
+                });
+              },
+            ),
+            const Spacer(),
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
