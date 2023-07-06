@@ -30,13 +30,28 @@ class _ExpensesState extends State<Expenses> {
 
   void _openAddExpensesOverlay() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context:
           context, // This context property is automatically added by Flutter
       // when using _ExpensesState. It has context of the ExpensesState widget class.
       // It has widget meta data of Flutter. This context is for the whole class.
-      builder: (ctx) => const NewExpense(), // Here, the context is about
+      builder: (ctx) => NewExpense(
+        onAddExpense: _addExpense,
+      ), // Here, the context is about
       // showModalBottomSheet (ctx for different name than context)
     );
+  }
+
+  void _addExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
+  }
+
+  void _removeExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
   }
 
   @override
@@ -55,7 +70,10 @@ class _ExpensesState extends State<Expenses> {
         children: [
           const Text('The chart'),
           Expanded(
-            child: ExpensesList(expenses: _registeredExpenses),
+            child: ExpensesList(
+              expenses: _registeredExpenses,
+              onRemoveExpense: _removeExpense,
+            ),
           ),
         ],
       ),
